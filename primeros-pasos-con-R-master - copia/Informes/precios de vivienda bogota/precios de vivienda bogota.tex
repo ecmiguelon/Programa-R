@@ -1,0 +1,154 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{booktabs}
+\usepackage{svg}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{changepage}
+\usepackage{float}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage[sc]{mathpazo}
+\usepackage{multicol}
+\usepackage{titling}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{ragged2e} % Añade el paquete ragged2e
+\graphicspath{./imagenes/}
+\DeclareGraphicsExtensions{.eps}
+\usepackage[colorlinks = true,
+linkcolor = black,
+urlcolor = blue,
+citecolor = black ]{hyperref}
+\renewcommand{\bibname}{Bibliografía}
+\renewcommand{\baselinestretch}{1.5}
+
+\setlength{\droptitle}{-4.5\baselineskip}
+\title{   \begin{center}\rule{0.9\textwidth}{0.1mm} \end{center}
+    {\Huge\textbf{Precios para la valoración de vivienda en Bogotá.}}
+    \begin{center}\rule{0.9\textwidth}{0.1mm} \end{center}
+}
+\author{\textsc{Randolf Herrera Rincon}
+    \thanks{Economista - Universidad de La Guajira}\\
+    \normalsize 
+    \href{mailto:randolfherrerarincon@gmail.com}{randolfherrerarincon@gmail.com}   
+}
+
+
+\lstdefinestyle{Rstyle}{
+	language=R,
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{blue},
+	stringstyle=\color{red},
+	commentstyle=\color{green},
+	showstringspaces=false,
+	breaklines=true,
+	frame=none, % Cambiado de frame=tb a frame=none
+	backgroundcolor=\color{gray!10},
+	captionpos=b,
+	tabsize=2,
+	rulecolor=\color{black},
+	morekeywords={data.frame},
+}
+
+% Cambiar "Listing" por "Fragmento de código" en los captions
+\renewcommand\lstlistingname{Fragmento de código}
+
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Obtención de datos}
+Los datos se obtuvieron, de la plataforma kaggle, en el siguiente enlace: \href{https://www.kaggle.com/datasets/pablobravo73/real-estate-bogota}{Análisis del mercado inmobiliario en Bogotá} y ``contiene información sobre inmuebles en Bogotá, Colombia, incluyendo el tipo de propiedad, descripción, cantidad de habitaciones y baños, área, barrio, UPZ (Unidad de Planeamiento Zonal) y valor" \citep{Camacho2024}
+\section{Estimación}
+Se espera evaluar el siguiente modelo:
+
+\begin{equation}
+	\log(\widehat{Valor\_numerico})_{i}=\widehat{\beta{0}} + \widehat{\beta_{1}Banos}_{i} + \beta_{2}\log(\widehat{Area})_{i} + \beta_{3}\widehat{Habitaciones}_{i} + \epsilon
+\end{equation}
+
+Donde se espera que $\beta_{1}, \beta_{2}, \beta_{3} > 0$
+
+\section{Cumplimiento de los supuestos econométricos y medidas a corregir}
+
+\begin{enumerate}
+	\item Normalidad de residuos
+	\begin{itemize}
+		\item Prueba de Jarque-Bera
+	\end{itemize}
+\end{enumerate}
+
+
+
+\section{Presentación del modelo}
+\subsection{Comparación de modelos}
+
+\begin{table}[H] 
+	\centering 
+	
+	\caption{Modelos de precios, 2 modelos alternativos} 
+	\label{} 
+	\scalebox{0.4}{
+	\begin{tabular}{@{\extracolsep{5pt}}lcccccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		& \multicolumn{8}{c}{\textit{Dependent variable:}} \\ 
+		\cline{2-9} 
+		\\[-1.8ex] & \multicolumn{4}{c}{Precio de la vivienda} & \multicolumn{2}{c}{ } & \multicolumn{2}{c}{log(valor\_numerico)} \\ 
+		\\[-1.8ex] & \multicolumn{4}{c}{\textit{OLS}} & \multicolumn{2}{c}{\textit{coefficient}} & \multicolumn{2}{c}{\textit{OLS}} \\ 
+		& \multicolumn{4}{c}{\textit{}} & \multicolumn{2}{c}{\textit{test}} & \multicolumn{2}{c}{\textit{}} \\ 
+		& MCO & MCO & MCP & MCP & MCR & MCR & MCGF & MCGF \\ 
+		\\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6) & (7) & (8)\\ 
+		\hline \\[-1.8ex] 
+		Constant & 18.582$^{***}$ & 18.679$^{***}$ & 18.799$^{***}$ & 19.190$^{***}$ & 18.414$^{***}$ & 19.198$^{***}$ & 18.166$^{***}$ & 18.819$^{***}$ \\ 
+		& (0.044) & (0.018) & (0.075) & (0.059) & (0.372) & (0.100) & (0.130) & (0.041) \\ 
+		& & & & & & & & \\ 
+		Banos & 0.136$^{***}$ & 0.141$^{***}$ & 0.140$^{***}$ & 0.134$^{***}$ & 0.135$^{***}$ & 0.136$^{***}$ & 0.126$^{***}$ & 0.135$^{***}$ \\ 
+		& (0.009) & (0.008) & (0.009) & (0.009) & (0.009) & (0.007) & (0.008) & (0.007) \\ 
+		& & & & & & & & \\ 
+		log(Area) & 0.030$^{**}$ &  & $-$0.065$^{*}$ &  & 0.105 &  & 0.200$^{***}$ &  \\ 
+		& (0.013) &  & (0.034) &  & (0.158) &  & (0.053) &  \\ 
+		& & & & & & & & \\ 
+		Habitaciones & $-$0.020$^{***}$ & $-$0.014$^{**}$ & $-$0.017$^{**}$ & $-$0.421$^{***}$ & $-$0.024$^{*}$ & $-$0.432$^{***}$ & $-$0.014$^{*}$ & $-$0.133$^{***}$ \\ 
+		& (0.007) & (0.007) & (0.007) & (0.048) & (0.013) & (0.078) & (0.008) & (0.030) \\ 
+		& & & & & & & & \\ 
+		I(log(Area)$\hat{\mkern6mu}$2) &  &  & 0.009$^{**}$ &  & $-$0.007 &  & $-$0.016$^{***}$ &  \\ 
+		&  &  & (0.004) &  & (0.014) &  & (0.004) &  \\ 
+		& & & & & & & & \\ 
+		I(log(Habitaciones)$\hat{\mkern6mu}$2) &  &  &  & 0.597$^{***}$ &  & 0.616$^{***}$ &  &  \\ 
+		&  &  &  & (0.073) &  & (0.114) &  &  \\ 
+		& & & & & & & & \\ 
+		I(Habitaciones$\hat{\mkern6mu}$2) &  &  &  &  &  &  &  & 0.025$^{***}$ \\ 
+		&  &  &  &  &  &  &  & (0.006) \\ 
+		& & & & & & & & \\ 
+		\hline \\[-1.8ex] 
+		Observations & 1,736 & 1,736 & 1,736 & 1,736 &  &  & 1,736 & 1,736 \\ 
+		R$^{2}$ & 0.150 & 0.147 & 0.143 & 0.153 &  &  & 0.201 & 0.204 \\ 
+		Adjusted R$^{2}$ & 0.149 & 0.146 & 0.141 & 0.152 &  &  & 0.200 & 0.202 \\ 
+		Residual Std. Error & 0.154 (df = 1732) & 0.154 (df = 1733) & 0.079 (df = 1731) & 0.101 (df = 1732) &  &  & 1.629 (df = 1731) & 1.589 (df = 1732) \\ 
+		F Statistic & 101.960$^{***}$ (df = 3; 1732) & 149.717$^{***}$ (df = 2; 1733) & 72.353$^{***}$ (df = 4; 1731) & 104.642$^{***}$ (df = 3; 1732) &  &  & 109.155$^{***}$ (df = 4; 1731) & 147.801$^{***}$ (df = 3; 1732) \\ 
+		\hline 
+		\hline \\[-1.8ex] 
+		\textit{Note:}  & \multicolumn{8}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+		& \multicolumn{8}{r}{Elaboración propia} \\ 
+	\end{tabular} 
+}
+\end{table}
+
+
+
+\newpage
+\bibliography{biblio}
+\bibliographystyle{apalike}     
+\end{document}
